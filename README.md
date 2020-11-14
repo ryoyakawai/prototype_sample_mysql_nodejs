@@ -1,5 +1,5 @@
 # prototype_sample_mysql_nodejs
-This repository is storing program for to check feasibiloty of combination of procedure bwtween web app and database.  
+This repository is storing program for to check feasibiloty of combination of procedure between web app and database.  
 **!!!! Note !!!!** Never use for production purpose, this program DOES NOT properly handle regarding security and valunerabiloties. 
 
 # Build
