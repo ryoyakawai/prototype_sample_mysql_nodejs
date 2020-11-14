@@ -1,0 +1,41 @@
+version: '3.5'
+
+services:
+  web_server:
+    container_name: web_server
+    build:
+      context: ./web_server
+      dockerfile: ./Dockerfile
+      args:
+        - WORK_DIR=${WORK_DIR}
+    restart: always
+    environment:
+      WEB_PORT: ${WEB_PORT_TO_EXPOSE}
+    ports:
+      - ${WEB_PORT_TO_EXPOSE}:${WEB_PORT_TO_EXPOSE}
+    volumes:
+      - ./web_server/${STATIC_PATH_TO_EXPOSE}:${WORK_DIR}/${STATIC_PATH_TO_EXPOSE}
+  database:
+    container_name: merchandise_sample
+    build:
+      context: ./mysql_server
+      dockerfile: ./Dockerfile
+      args:
+        - MYSQL_SERVER_HOST_NAME=${DATABASE_SERVER_HOST_NAME}
+        - MYSQL_DATABASE=${DATABASE_NAME}
+        - MYSQL_PORT_TO_EXPOSE=${DATABASE_PORT_TO_EXPOSE}
+        - MYSQL_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
+        - MYSQL_USER=${DATABASE_USER_NAME}
+        - MYSQL_PASSWORD=${DATABASE_USER_PASSWORD}
+    environment:
+      TZ: "Asia/Tokyo"
+    ports:
+      - ${DATABASE_PORT_TO_EXPOSE}:3306
+    tty: true
+    networks:
+      - merchandise_sample-network
+    restart: always
+
+networks:
+  merchandise_sample-network:
+    driver: bridge
