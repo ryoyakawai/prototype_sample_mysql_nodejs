@@ -1,6 +1,5 @@
 "use strict";
 
-
 module.exports = class MysqlConnector {
 //export default class MysqlConnector {
   constructor(options = {}) {

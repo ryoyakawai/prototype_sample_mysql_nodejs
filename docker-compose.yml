@@ -8,6 +8,12 @@ services:
       dockerfile: ./Dockerfile
       args:
         - WORK_DIR=${WORK_DIR}
+        - WEB_PORT=${WEB_PORT_TO_EXPOSE}
+        - DATABASE_HOST=${WEB_DATABASE_HOST}
+        - DATABASE_PORT=${DATABASE_PORT_TO_EXPOSE}
+        - DATABASE_USER_NAME=${DATABASE_USER_NAME}
+        - DATABASE_USER_PASSWORD=${DATABASE_USER_PASSWORD}
+        - DATABASE_NAME=${DATABASE_NAME}
     restart: always
     environment:
       WEB_PORT: ${WEB_PORT_TO_EXPOSE}

@@ -5,13 +5,18 @@
   const express = require('express')
   const router = express.Router()
 
+  const db_host = process.env.DATABASE_HOST || 'localhost'
+  const db_port = process.env.DATABASE_PORT || '13306'
+  const db_user_id = process.env.DATABASE_USER_NAME || '0000'
+  const db_user_password = process.env.DATABASE_USER_PASSWORD || '0000'
+  const database = process.env.DATABASE_NAME || 'merchandise_sample'
+
   const database_options = {
-    //host     : 'localhost',
-    host     : 'host.docker.internal',
-    port     : '13306',
-    user     : '0000',
-    password : '0000',
-    database : 'merchandise_sample'
+    host     : db_host,
+    port     : db_port,
+    user     : db_user_id,
+    password : db_user_password,
+    database : database
   }
 
   const MysqlConnector = require('../libs/mysqlconnector')
@@ -28,7 +33,7 @@
   })
 
   router.post('/query', async function(req, res, next){
-    console.log(req.body, req.body.query)
+    console.log(database_options)
     const _SQL = 'SELECT * FROM merchandise_type_master'
     mysql.open()
     try {
