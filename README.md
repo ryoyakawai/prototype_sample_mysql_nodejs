@@ -2,6 +2,10 @@
 This repository is storing program for to check feasibiloty of combination of procedure between web app and database.  
 **!!!! Note !!!!** Never use for production purpose, this program DOES NOT properly handle regarding security and valunerabiloties. 
 
+# Language & Database
+- Language: NodeJS, JavaScript
+- Database: MySQL
+
 # Build
 Clone this repository, and buid by docker-compose CLI.
 ```bash
