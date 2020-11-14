@@ -33,12 +33,10 @@
   })
 
   router.post('/query', async function(req, res, next){
-    console.log(database_options)
     const _SQL = 'SELECT * FROM merchandise_type_master'
     mysql.open()
     try {
       const results = await mysql.queryByRawSql(_SQL)
-      console.log(results)
       obj_response.success = true
       obj_response.data = results
       res.status(200).send(obj_response)
