@@ -22,18 +22,35 @@
   const MysqlConnector = require('../libs/mysqlconnector')
   const mysql = new MysqlConnector(database_options)
 
+  const _MONTH_TEXT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
   let obj_response = {
     success: false,
     data: {}
   }
 
+  const getDateTimeHeader = () => {
+    // 15/Nov/2020:02:02:24 +0000
+    const pd_00 = ( target_num, digit = 2) => {
+      return ('00' + target_num.toString()).substr(-1 * parseInt(digit))
+    }
+    const dd = new Date();
+    const date= `${pd_00(dd.getDate())}/${_MONTH_TEXT[dd.getMonth()]}/${dd.getFullYear()}`
+    const utc_time = `${pd_00(dd.getUTCHours())}:${pd_00(dd.getUTCMinutes())}:${pd_00(dd.getUTCSeconds())} +0000`
+    return `${date}:${utc_time}`
+  }
+
+  /*
   router.use(function timeLog (req, res, next) {
-    console.log('Time: ', Date.now())
+    console.log(`datetime=[${getDateTimeHeader()}]`)
     next()
   })
+  */
 
   router.post('/query', async function(req, res, next){
-    const _SQL = 'SELECT * FROM merchandise_type_master'
+    const req_body = req.body
+    const _SQL = req_body.query
+    console.log(`  - - [${getDateTimeHeader()}] "SQL LOG" "${_SQL}"`)
     mysql.open()
     try {
       const results = await mysql.queryByRawSql(_SQL)

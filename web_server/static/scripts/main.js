@@ -45,7 +45,7 @@
        }
      }
 
-     let post_body = { query: "SELECT * FROM _static_scripts_main_js;"}
+     let post_body = { query: 'SELECT * FROM merchandise_type_master ORDER BY merchandise_type_master_seq ASC'}
      call_api( post_body )
 
 })()
