@@ -29,6 +29,14 @@
     data: {}
   }
 
+  const getIPAddress = (req) => {
+    const ip_addr = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+    if (ip_addr == '') {
+      ip_addr = ''
+    }
+    return ip_addr
+  }
+
   const getDateTimeHeader = () => {
     // 15/Nov/2020:02:02:24 +0000
     const pd_00 = ( target_num, digit = 2) => {
@@ -50,7 +58,7 @@
   router.post('/query', async function(req, res, next){
     const req_body = req.body
     const _SQL = req_body.query
-    console.log(`  - - [${getDateTimeHeader()}] "SQL LOG" "${_SQL}"`)
+    console.log(`${getIPAddress(req)} - - [${getDateTimeHeader()}] "SQL LOG" "${_SQL}"`)
     mysql.open()
     try {
       const results = await mysql.queryByRawSql(_SQL)
